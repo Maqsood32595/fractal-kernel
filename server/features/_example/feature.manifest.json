@@ -1,0 +1,9 @@
+{
+    "id": "example",
+    "name": "Example Feature",
+    "description": "A working template. Copy this folder to create a new feature. The Kernel will auto-discover it.",
+    "version": "1.0.0",
+    "enabled": true,
+    "basePath": "/api/example",
+    "routes": "./routes.js"
+}

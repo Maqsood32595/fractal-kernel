@@ -1,0 +1,31 @@
+{
+    "name": "fractal-kernel",
+    "version": "0.1.0",
+    "description": "A manifest-driven architecture pattern for AI-assisted Node.js development",
+    "main": "server/index.js",
+    "bin": {
+        "create-fractal-app": "./bin/create.js"
+    },
+    "scripts": {
+        "start": "node server/index.js",
+        "dev": "nodemon server/index.js",
+        "test": "node test/smoke.js"
+    },
+    "keywords": [
+        "fractal",
+        "kernel",
+        "architecture",
+        "ai-assisted",
+        "vibe-coding",
+        "scaffold",
+        "feature-flags",
+        "express"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.18.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.0"
+    }
+}
