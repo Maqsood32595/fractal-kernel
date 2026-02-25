@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fractal Kernel App</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f0f13;
+      color: #e8e8f0;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Sidebar */
+    #sidebar {
+      width: 220px;
+      background: #17171f;
+      border-right: 1px solid #2a2a38;
+      padding: 24px 0;
+      flex-shrink: 0;
+    }
+
+    #sidebar h2 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6b6b80;
+      padding: 0 20px 12px;
+    }
+
+    #nav-features { list-style: none; }
+
+    #nav-features li a {
+      display: block;
+      padding: 9px 20px;
+      color: #c0c0d0;
+      text-decoration: none;
+      font-size: 14px;
+      border-left: 2px solid transparent;
+      transition: all 0.15s;
+    }
+
+    #nav-features li a:hover,
+    #nav-features li a.active {
+      color: #fff;
+      background: #22222e;
+      border-left-color: #7c6af7;
+    }
+
+    .nav-badge {
+      display: inline-block;
+      font-size: 10px;
+      background: #2a2a38;
+      color: #7c6af7;
+      padding: 1px 6px;
+      border-radius: 10px;
+      margin-left: 6px;
+    }
+
+    /* Main content */
+    #main {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+    }
+
+    #page-content {
+      max-width: 760px;
+    }
+
+    /* Home page */
+    .home-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #7c6af7, #a98cf5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .home-subtitle {
+      color: #8888a0;
+      font-size: 15px;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .feature-card {
+      background: #17171f;
+      border: 1px solid #2a2a38;
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .feature-card:hover {
+      border-color: #7c6af7;
+      background: #1c1c28;
+    }
+
+    .feature-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .feature-card p {
+      font-size: 13px;
+      color: #8888a0;
+    }
+
+    .feature-card .feature-path {
+      font-size: 11px;
+      color: #5a5a70;
+      margin-top: 8px;
+      font-family: monospace;
+    }
+
+    /* Loading / error */
+    .loading { color: #6b6b80; font-size: 14px; }
+    .error { color: #f87171; font-size: 14px; }
+  </style>
+</head>
+<body>
+
+  <nav id="sidebar">
+    <h2>Features</h2>
+    <ul id="nav-features">
+      <li><a href="#/" class="active">Home</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+    <div id="page-content">
+      <p class="loading">Loading...</p>
+    </div>
+  </main>
+
+  <script>
+    // ── Router ─────────────────────────────────────────────────────────────────
+    // Each feature registers itself here. The hash in the URL drives navigation.
+    const routes = {};
+
+    function navigate(hash) {
+      hash = hash || '#/';
+      window.location.hash = hash;
+
+      // Update active nav link
+      document.querySelectorAll('#nav-features a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === hash);
+      });
+
+      const render = routes[hash];
+      const container = document.getElementById('page-content');
+      if (render) {
+        render(container);
+      } else {
+        container.innerHTML = `<p class="error">Page not found: ${hash}</p>`;
+      }
+    }
+
+    window.addEventListener('hashchange', () => navigate(window.location.hash));
+
+    // ── Home page ──────────────────────────────────────────────────────────────
+    routes['#/'] = async function(container) {
+      container.innerHTML = `
+        <div class="home-title">Fractal Kernel</div>
+        <p class="home-subtitle">
+          A manifest-driven full-stack architecture. Each feature lives in its own folder
+          — both on the server and in the client. The Kernel discovers them automatically.
+        </p>
+        <div id="feature-list"><p class="loading">Discovering features...</p></div>
+      `;
+
+      try {
+        const res = await fetch('/api/features');
+        const data = await res.json();
+        const list = document.getElementById('feature-list');
+
+        if (data.features.length === 0) {
+          list.innerHTML = `<p class="loading">No active features found. Copy _example to add one.</p>`;
+          return;
+        }
+
+        list.innerHTML = data.features.map(f => `
+          <div class="feature-card" onclick="navigate('#/${f.id}')">
+            <h3>${f.name}</h3>
+            <p>${f.description || 'No description.'}</p>
+            <div class="feature-path">${f.basePath}</div>
+          </div>
+        `).join('');
+      } catch(e) {
+        document.getElementById('feature-list').innerHTML =
+          `<p class="error">Could not reach the server. Is it running?</p>`;
+      }
+    };
+
+    // ── Dynamic feature loader ─────────────────────────────────────────────────
+    // Features register themselves by calling window.FractalKernel.register(id, renderFn)
+    window.FractalKernel = {
+      register(id, renderFn) {
+        routes[`#/${id}`] = renderFn;
+
+        // Add to sidebar nav if not already there
+        const nav = document.getElementById('nav-features');
+        if (!nav.querySelector(`[href="#/${id}"]`)) {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="#/${id}">${id}</a>`;
+          li.querySelector('a').addEventListener('click', e => {
+            e.preventDefault();
+            navigate(`#/${id}`);
+          });
+          nav.appendChild(li);
+        }
+      }
+    };
+
+    // ── Load all feature scripts ───────────────────────────────────────────────
+    // Each feature in client/features/ has its own app.js that self-registers.
+    // Add your feature script tags here as you add features.
+    const featureScripts = [
+      '/features/_example/app.js'
+    ];
+
+    Promise.all(featureScripts.map(src => new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = () => { console.warn(`Could not load feature: ${src}`); resolve(); };
+      document.head.appendChild(s);
+    }))).then(() => {
+      // All features loaded — navigate to current hash
+      navigate(window.location.hash || '#/');
+    });
+  </script>
+</body>
+</html>

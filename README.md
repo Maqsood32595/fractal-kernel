@@ -1,105 +1,90 @@
-# Fractal Kernel
+# Fractal Kernel — with-frontend branch
 
-A manifest-driven feature architecture for Node.js + Express, designed to work cleanly with AI coding agents.
+This branch adds a **vanilla JS frontend** to the backend-only `main` branch.
 
-> **Note:** This is a pattern extracted from a personal production project. It is not academically validated. It worked well for me — I'm sharing it to get feedback.
-
----
-
-## The Problem
-
-When building with AI agents, codebases tend to hit a wall around feature 8-15. The AI starts breaking existing code while adding new features, because it has to read the entire codebase to understand context. As the project grows, the signal-to-noise ratio drops and mistakes increase.
-
-## How This Helps
-
-Features are isolated into self-contained folders. A central Kernel auto-discovers and mounts them. The AI only needs to work inside one folder per task — it cannot accidentally touch code it shouldn't.
+The same feature-per-folder pattern applies to both sides:
 
 ```
-server/
-├── kernel.js                        ← Never modify this
-├── index.js                         ← Never modify this
-└── features/
-    ├── auth/
-    │   ├── feature.manifest.json    ← Declares this folder as a feature
-    │   ├── routes.js                ← HTTP only
-    │   └── service.js              ← Business logic only
-    ├── payments/
-    │   ├── feature.manifest.json
-    │   ├── routes.js
-    │   └── service.js
-    └── _example/                    ← Copy this to add a new feature
+fractal-kernel/
+├── server/
+│   ├── kernel.js                        ← Backend discovery engine
+│   ├── index.js                         ← Serves API + static frontend
+│   └── features/
+│       └── _example/
+│           ├── feature.manifest.json    ← Declares the feature
+│           ├── routes.js                ← Backend HTTP routes
+│           └── service.js              ← Backend business logic
+│
+└── client/
+    ├── index.html                       ← SPA shell — auto-builds nav from /api/features
+    └── features/
+        └── _example/
+            └── app.js                   ← Frontend page — calls backend API, registers itself
 ```
 
-When a new feature folder is added with a manifest, the Kernel finds and mounts it automatically on next boot. No registration needed.
+**One feature = one folder on the server + one folder in the client.**
+
+The Kernel handles the backend. The client shell calls `/api/features` at load time and builds the sidebar nav automatically — just like the Kernel auto-discovers backend features.
 
 ---
 
 ## Quick Start
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/fractal-kernel.git
-cd fractal-kernel
 npm install
 npm run dev
 ```
 
-Visit:
-- `http://localhost:3000/api/example` — Example feature (copy `_example` to get started)
-- `http://localhost:3000/api/features` — Lists all discovered and loaded features
+Visit `http://localhost:3000` — you'll see the frontend shell with the Example feature in the sidebar.
 
 ---
 
-## Adding a Feature
+## Adding a Full-Stack Feature
 
-1. Copy `server/features/_example/` to `server/features/your-feature/`
-2. Update `feature.manifest.json` — change `id`, `name`, `basePath`
-3. Write logic in `service.js`, expose it in `routes.js`
-4. Restart the server
+```bash
+# Backend
+cp -r server/features/_example server/features/my-feature
 
-The Kernel discovers and mounts it. No other files change.
+# Frontend
+cp -r client/features/_example client/features/my-feature
+```
+
+Then:
+1. Update `server/features/my-feature/feature.manifest.json` — change `id`, `name`, `basePath`
+2. Write backend logic in `server/features/my-feature/service.js`
+3. Expose it in `server/features/my-feature/routes.js`
+4. Write frontend UI in `client/features/my-feature/app.js` — call `FractalKernel.register('my-feature', renderFn)`
+5. Add `'/features/my-feature/app.js'` to the `featureScripts` array in `client/index.html`
+6. Restart the server
+
+The backend is auto-discovered. The frontend self-registers. Both sides follow the same pattern.
 
 ---
 
-## Disabling a Feature
+## How the Frontend Works
 
-Set `"enabled": false` in the manifest. The Kernel will skip it on next boot. No code deletion needed.
+The `client/index.html` is a minimal SPA shell. On load:
+1. It fetches `/api/features` to get the list of backend features
+2. It loads each script in `featureScripts` — each feature registers its own page via `window.FractalKernel.register()`
+3. Navigation is hash-based (`#/feature-id`) — no build step, no router library
 
----
-
-## File Structure Explained
-
-| File | Purpose |
-|---|---|
-| `kernel.js` | Recursive discovery and mounting engine. Do not modify. |
-| `index.js` | Express setup and server boot. Do not modify. |
-| `feature.manifest.json` | Declares a folder as a feature. Required for discovery. |
-| `routes.js` | HTTP layer. Call service functions. No business logic. |
-| `service.js` | Business logic. No HTTP. Testable in isolation. |
-| `AI_RULES.md` | Instructions for AI coding agents about this codebase. |
+Feature scripts live at `client/features/your-feature/app.js` and self-register. Adding a feature to the frontend is as simple as adding a script tag and calling `register()`.
 
 ---
 
 ## For AI Coding Agents
 
-Read `AI_RULES.md` before making any changes. The rules are short and the pattern is straightforward. The `_example` folder is the authoritative template.
+Read `AI_RULES.md` before starting any work. The pattern for full-stack features:
+
+- Backend: one feature folder with manifest, routes, service
+- Frontend: mirror folder in `client/features/` with `app.js`
+- Both are independent — the frontend calls the backend via `fetch()`
+- Never import one feature's `app.js` into another
 
 ---
 
-## Honest Limitations
+## Limitations
 
-- Designed for solo or small-team development. Not tested at enterprise scale.
-- Addresses AI context management and development complexity, not traffic or infrastructure scaling.
-- Similar patterns exist (Vertical Slice Architecture, Plugin Systems). This is a practical implementation, not a new concept.
-- Team workflows (concurrent feature development, merge conflicts) not formally tested.
-
----
-
-## What the Production App Looks Like
-
-This pattern powers [shortshub.app](https://shortshub.app) — a video tools SaaS built and maintained by one developer using AI agents.
-
----
-
-## License
-
-MIT
+- No build step, no TypeScript. This is intentional — zero toolchain complexity.
+- If you need React or Vue, create your own frontend in `client/` and keep the backend pattern as-is.
+- The client is a demonstration of the pattern, not a production UI framework.
