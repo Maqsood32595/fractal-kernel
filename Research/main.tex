@@ -172,29 +172,36 @@ When the Node.js application boots, \texttt{kernel.js} scans the \texttt{feature
 
 \begin{figure}[htbp]
 \begin{lstlisting}[language=JavaScript]
-// Core dynamic discovery loop in kernel.js
+// Core discovery loop in kernel.js
 const fs = require('fs');
 const path = require('path');
 
 function mountFeatures(app) {
-  const featuresDir = path.join(__dirname, 'features');
-  const dirs = fs.readdirSync(featuresDir);
+  const fDir =
+    path.join(__dirname, 'features');
+  const dirs = fs.readdirSync(fDir);
 
   dirs.forEach(dir => {
-    if (dir.startsWith('_')) return; // Skip templates
+    if (dir.startsWith('_')) return;
 
-    const manifestPath = path.join(featuresDir, dir, 'feature.manifest.json');
-    if (fs.existsSync(manifestPath)) {
+    const mPath =
+      path.join(fDir, dir,
+        'feature.manifest.json');
+
+    if (fs.existsSync(mPath)) {
       try {
-        const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
-        if (manifest.enabled) {
-          const routesPath = path.join(featuresDir, dir, manifest.routes.file);
-          const router = require(routesPath);
-          app.use(manifest.routes.prefix, router);
-          console.log(`[Kernel Mounted]: ${manifest.name} -> ${manifest.routes.prefix}`);
+        const m = JSON.parse(
+          fs.readFileSync(mPath, 'utf8'));
+        if (m.enabled) {
+          const rPath =
+            path.join(fDir, dir,
+              m.routes.file);
+          const router = require(rPath);
+          app.use(m.routes.prefix, router);
+          console.log(`[Mounted]: ${m.name}`);
         }
       } catch (err) {
-        console.error(`[Kernel] Failed to mount feature in ${dir}:`, err.message);
+        console.error(`[Err]: ${err.message}`);
       }
     }
   });
