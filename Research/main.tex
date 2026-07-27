@@ -2,6 +2,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
+\usepackage[none]{hyphenat} % Completely disable line-break hyphenation for search engine indexing
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
@@ -12,6 +13,11 @@
 \usepackage{listings}
 \usepackage{url}
 \usepackage{hyperref}
+
+% Disable hyphenation penalty
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\sloppy
 
 % Custom listings language definitions for JSON and JavaScript
 \lstdefinelanguage{json}{
@@ -177,25 +183,23 @@ const fs = require('fs');
 const path = require('path');
 
 function mountFeatures(app) {
-  const fDir =
-    path.join(__dirname, 'features');
+  const fDir = path.join(
+    __dirname, 'features');
   const dirs = fs.readdirSync(fDir);
 
   dirs.forEach(dir => {
     if (dir.startsWith('_')) return;
 
-    const mPath =
-      path.join(fDir, dir,
-        'feature.manifest.json');
+    const mPath = path.join(
+      fDir, dir, 'feature.manifest.json');
 
     if (fs.existsSync(mPath)) {
       try {
         const m = JSON.parse(
           fs.readFileSync(mPath, 'utf8'));
         if (m.enabled) {
-          const rPath =
-            path.join(fDir, dir,
-              m.routes.file);
+          const rPath = path.join(
+            fDir, dir, m.routes.file);
           const router = require(rPath);
           app.use(m.routes.prefix, router);
           console.log(`[Mounted]: ${m.name}`);
