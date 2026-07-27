@@ -1,5 +1,7 @@
 \documentclass[conference]{IEEEtran}
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{lmodern}
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
@@ -180,8 +182,8 @@ function mountFeatures(app) {
 
   dirs.forEach(dir => {
     if (dir.startsWith('_')) return; // Skip templates
+
     const manifestPath = path.join(featuresDir, dir, 'feature.manifest.json');
-    
     if (fs.existsSync(manifestPath)) {
       try {
         const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
@@ -189,7 +191,7 @@ function mountFeatures(app) {
           const routesPath = path.join(featuresDir, dir, manifest.routes.file);
           const router = require(routesPath);
           app.use(manifest.routes.prefix, router);
-          console.log(`[Kernel] Mounted: ${manifest.name} -> ${manifest.routes.prefix}`);
+          console.log(`[Kernel Mounted]: ${manifest.name} -> ${manifest.routes.prefix}`);
         }
       } catch (err) {
         console.error(`[Kernel] Failed to mount feature in ${dir}:`, err.message);
