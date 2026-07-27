@@ -217,7 +217,9 @@ function mountFeatures(app) {
 
 \subsection{Agent Interaction Protocol}
 Under Fractal Kernel, when an AI coding agent is assigned a task (e.g., ``Add refund functionality to payments''), the system prompt explicitly restricts the agent's file system visibility to:
-$$\mathcal{S}_{\text{agent}} = \{\text{features/payments/*}\}$$
+\begin{equation}
+\mathcal{S}_{\text{agent}} = \{\text{features/payments/*}\}
+\end{equation}
 Because the central \texttt{kernel.js} automatically mounts new routes upon application restart, the agent never modifies global files (\texttt{index.js} or routing registries). Consequently, the context window size remains strictly bounded by the size of the individual feature folder, yielding $O(1)$ context complexity with respect to the total codebase size.
 
 \section{Empirical Evaluation \& Benchmarks}
