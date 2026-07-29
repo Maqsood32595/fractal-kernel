@@ -1,79 +1,52 @@
-# Fractal Kernel Research Paper & Submission Guide
+# Fractal Kernel: Deterministic Context Isolation for LLM-Driven Feature Engineering in Node.js Applications
 
-This folder contains the complete academic paper for **Fractal Kernel**, formatted in standard IEEE double-column LaTeX (`IEEEtran`) for publication on preprint servers such as **TechRxiv (by IEEE)** or **arXiv (`cs.SE`)**.
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21622791.svg)](https://doi.org/10.5281/zenodo.21622791)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-blue.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-fractal--kernel-green.svg)](https://github.com/Maqsood32595/fractal-kernel)
+
+**Author:** Mohammed Maqsood L  
+**Affiliation:** Software Architecture & AI Systems Research, Fractal Kernel Project  
+**Contact:** maqsoodlmohammed@gmail.com  
+**Zenodo DOI:** [10.5281/zenodo.21622791](https://doi.org/10.5281/zenodo.21622791)  
 
 ---
 
-## 📁 Included Files
+## 📌 Abstract
 
-- **[`main.tex`](file:///d:/FastMVPs/Research/main.tex)**: Main IEEE LaTeX document source containing Abstract, Introduction, System Architecture, Manifest Schema, Dynamic Discovery Engine, Empirical Benchmarks, Related Work, and Conclusion.
-- **[`references.bib`](file:///d:/FastMVPs/Research/references.bib)**: BibTeX bibliography containing full citations for SWE-bench, LLM Context Windows, Model Context Protocol (MCP), Graph RAG, and Vertical Slice Architectures.
+As Large Language Model (LLM) coding agents are increasingly integrated into commercial software development workflows, scaling codebase size introduces severe performance bottlenecks. Central among these is context window saturation and agentic regression cascades: as a codebase grows beyond 10–15 modules, agents operating under global context frameworks expend excessive prompt tokens and suffer high error rates by modifying non-relevant files. 
+
+This paper introduces **Fractal Kernel**, a manifest-driven architecture for Node.js and Express applications designed specifically for AI agent context window optimization. By enforcing strict physical directory boundaries around features and utilizing a central kernel for zero-registration dynamic runtime discovery, Fractal Kernel caps an LLM agent’s operational context footprint to $O(1)$ complexity relative to application growth. 
+
+We empirically evaluate Fractal Kernel against a standard monolithic Express architecture across 15 sequential feature implementation tasks using state-of-the-art coding agents. Our results demonstrate an **85.9% reduction** in average prompt token consumption per task (from 32,150 to 4,520 tokens), an increase in first-pass task completion rates from **62% to 91%**, and the **complete elimination (0%)** of cross-feature regression bugs.
 
 ---
 
-## 🛠️ How to Compile `main.tex` to PDF
+## 📖 Citation
 
-### Option A: Using Overleaf (Easiest - 1 Minute)
-1. Go to your project on [Overleaf.com](https://www.overleaf.com/).
-2. Paste the contents of [`main.tex`](file:///d:/FastMVPs/Research/main.tex) directly into `main.tex` in Overleaf.
-3. Create `references.bib` in Overleaf and paste the contents of [`references.bib`](file:///d:/FastMVPs/Research/references.bib).
-4. Click **Recompile** to generate the final PDF.
+If you use or reference Fractal Kernel in your research or applications, please cite:
 
-### Option B: Local Compilation via CLI / LaTeX Engine
-If you have `pdflatex` or `texlive` / `miktex` installed:
-```bash
-cd Research
-pdflatex main.tex
-bibtex main
-pdflatex main.tex
-pdflatex main.tex
+```bibtex
+@article{mohammed2026fractalkernel,
+  author    = {Mohammed, Maqsood L},
+  title     = {Fractal Kernel: Deterministic Context Isolation for LLM-Driven Feature Engineering in Node.js Applications},
+  journal   = {Zenodo Preprint},
+  year      = {2026},
+  version   = {v1.0.0},
+  doi       = {10.5281/zenodo.21622791},
+  url       = {https://doi.org/10.5281/zenodo.21622791}
+}
 ```
-This generates `main.pdf`.
+
+```text
+Mohammed, M. L. (2026). Fractal Kernel: Deterministic Context Isolation for LLM-Driven Feature Engineering in Node.js Applications (Version v1.0.0). Zenodo. https://doi.org/10.5281/zenodo.21622791
+```
 
 ---
 
-## 🚀 How to Submit
+## 📁 Repository & Source Files
 
-### Route 1: Submit to TechRxiv (IEEE) — Recommended for Instant DOI & Zero Gatekeeping
-**TechRxiv** is IEEE’s official open preprint server. It requires **no endorsement codes**, provides an official **IEEE DOI**, and indexes automatically on **Google Scholar**.
-
-1. Go to **[TechRxiv.org](https://www.techrxiv.org/)** and click **Submit**.
-2. Sign in with your IEEE account (or create a free account).
-3. Fill in the submission details:
-   - **Title:** *Fractal Kernel: Deterministic Context Isolation for LLM-Driven Feature Engineering in Node.js Applications*
-   - **Author:** Mohammed Maqsood L
-   - **Abstract:** Copy the abstract from `main.tex`.
-   - **Keywords:** `Software Architecture`, `LLM Context Optimization`, `Agentic Workflows`, `Node.js`, `Vertical Slice`.
-   - **Category:** *Software Engineering* / *Computer Science*.
-4. Upload your compiled PDF (`Fractal_Kernel_Paper.pdf`).
-5. Submit. It will be reviewed within 24–48 hours, assigned an IEEE DOI (`10.36227/techrxiv...`), and indexed on Google Scholar.
-
----
-
-### Route 2: Submit to arXiv (`cs.SE`)
-If you prefer submitting to arXiv under Computer Science -> Software Engineering (`cs.SE`):
-
-1. Go to **[arXiv.org](https://arxiv.org/submit)** and click **Start New Submission**.
-2. Select Category: **Computer Science -> Software Engineering (`cs.SE`)**.
-3. **Endorsement Check:** If arXiv requests an endorsement code:
-   - Copy your unique arXiv endorsement link.
-   - Send `Fractal_Kernel_Paper.pdf` + the link to a colleague or author who has published papers in `cs.SE`.
-   - Once endorsed, upload your `.tex` and `.bib` files (or compiled package).
-4. arXiv will process and announce the paper on the next daily bulletin.
-
----
-
-## 📊 Paper Summary & Key Metric Highlights
-
-| Metric | Monolith Express | Fractal Kernel | Improvement |
-| :--- | :--- | :--- | :--- |
-| **Mean Prompt Tokens / Task** | 32,150 | 4,520 | **-85.9%** |
-| **First-Pass Task Success Rate** | 62.0% | 91.3% | **+29.3%** |
-| **Cross-Slice Regressions** | 38.4% | 0.0% | **-100.0%** |
-| **Execution Time / Task** | 142.5s | 38.2s | **-73.2%** |
-
----
-
-## 📄 License & Attribution
-- Paper Author: **Mohammed Maqsood L**
-- GitHub Repository: [https://github.com/Maqsood32595/fractal-kernel](https://github.com/Maqsood32595/fractal-kernel)
+- **Manuscript PDF:** [`Fractal_Kernel_Paper.pdf`](./Fractal_Kernel_Paper.pdf)
+- **LaTeX Source Archive:** [`fractal_kernel_paper_source.zip`](./fractal_kernel_paper_source.zip)
+- **Code & Benchmark Snapshot:** [`fractal-kernel-v1.0.0.zip`](./fractal-kernel-v1.0.0.zip)
+- **Empirical Telemetry Report:** [`BENCHMARK_REPORT.md`](./BENCHMARK_REPORT.md)
+- **Real Gemini API Telemetry:** [`REAL_API_GEMINI_TOKEN_BENCHMARK_REPORT.md`](./REAL_API_GEMINI_TOKEN_BENCHMARK_REPORT.md)

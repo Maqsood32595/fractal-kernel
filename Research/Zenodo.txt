@@ -1,0 +1,17 @@
+Title: Fractal Kernel: Deterministic Context Isolation for LLM-Driven Feature Engineering in Node.js Applications
+
+Author: Mohammed, Maqsood L
+
+Digital Object Identifier (DOI): 10.5281/zenodo.21622791 (Version v1.0.0 DOI: 10.5281/zenodo.21622790)
+
+Publication Date: July 29, 2026
+
+License: Creative Commons Attribution 4.0 International (CC-BY 4.0)
+
+Attached Files:
+
+Fractal_Kernel_Paper.pdf (510.3 kB)
+
+fractal_kernel_paper_source.zip (8.7 kB)
+
+fractal-kernel-v1.0.0.zip (726.9 kB)
