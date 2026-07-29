@@ -97,7 +97,7 @@ AI-Assisted Software Engineering, LLM Context Optimization, Agentic Workflows, S
 \end{IEEEkeywords}
 
 \section{Introduction}
-Large Language Models (LLMs) fine-tuned for code generation and agentic task execution (e.g., Claude 3.5 Sonnet, GPT-4o) have transformed software engineering practices~\cite{swebench2024, context_degradation2023}. Modern AI agents possess the capability to plan, generate, refactor, and debug non-trivial software components autonomously. However, when deployed on expanding commercial codebases, agentic efficacy deteriorates non-linearly with scale---a phenomenon frequently described as the \textit{context saturation limit}~\cite{loss_in_middle2023}.
+Large Language Models (LLMs) fine-tuned for code generation and agentic task execution (e.g., Gemini 3.6 Flash, Claude 3.5 Sonnet, GPT-4o) have transformed software engineering practices~\cite{swebench2024, context_degradation2023}. Modern AI agents possess the capability to plan, generate, refactor, and debug non-trivial software components autonomously. However, when deployed on expanding commercial codebases, agentic efficacy deteriorates non-linearly with scale---a phenomenon frequently described as the \textit{context saturation limit}~\cite{loss_in_middle2023}.
 
 Traditional monolithic web application architectures (e.g., standard Express.js or Ruby on Rails applications organized by layer into \texttt{/controllers}, \texttt{/services}, \texttt{/routes}, and \texttt{/models}) force AI agents to ingest global application schemas to execute localized feature edits. As an application scales beyond 15 features, prompt token usage balloons past 30,000 tokens per interaction, leading to three critical failure modes:
 \begin{enumerate}
@@ -231,7 +231,7 @@ To quantify the benefits of Fractal Kernel, we developed a standardized benchmar
     \item \textbf{Fractal Kernel Baseline:} The same functional backend restructured into isolated manifest-driven feature slices.
 \end{enumerate}
 
-We conducted 15 sequential automated feature addition and refactoring tasks using a state-of-the-art coding agent (Claude 3.5 Sonnet executing via an autonomous tool-calling loop). Each task required reading relevant files, creating/modifying endpoints, and passing unit tests.
+We conducted 15 sequential automated feature addition and refactoring tasks using state-of-the-art coding agents (e.g., Gemini 3.6 Flash executing via an autonomous tool-calling loop). Each task required reading relevant files, creating/modifying endpoints, and passing unit tests.
 
 \subsection{Quantitative Results}
 
