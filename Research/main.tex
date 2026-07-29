@@ -136,18 +136,18 @@ In a Fractal Kernel application, all functional domain logic is contained within
 \begin{figure}[htbp]
 \begin{lstlisting}[language=bash]
 server/
-|-- kernel.js                <- Immutable Central Kernel
-|-- index.js                 <- Immutable Server Entry point
+|-- kernel.js          <- Central Kernel
+|-- index.js           <- Server Entry
 `-- features/
     |-- auth/
     |   |-- feature.manifest.json
-    |   |-- routes.js        <- HTTP Handlers
-    |   `-- service.js       <- Business Logic
+    |   |-- routes.js  <- HTTP Handlers
+    |   `-- service.js <- Business Logic
     |-- payments/
     |   |-- feature.manifest.json
     |   |-- routes.js
     |   `-- service.js
-    `-- _example/            <- Blueprint Template
+    `-- _example/      <- Blueprint
 \end{lstlisting}
 \caption{Fractal Kernel Directory Topology illustrating strict feature boundaries.}
 \label{fig:directory_structure}
