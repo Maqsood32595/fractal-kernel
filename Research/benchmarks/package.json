@@ -1,0 +1,12 @@
+{
+  "name": "fractal-kernel-benchmarks",
+  "version": "1.0.0",
+  "description": "Automated empirical benchmark runner for Fractal Kernel vs Express Monolith",
+  "main": "benchmark_runner.js",
+  "scripts": {
+    "benchmark": "node benchmark_runner.js"
+  },
+  "keywords": ["benchmark", "fractal-kernel", "llm-context", "express"],
+  "author": "Mohammed Maqsood L",
+  "license": "MIT"
+}

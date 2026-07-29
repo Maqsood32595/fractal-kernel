@@ -1,0 +1,199 @@
+{
+  "monolith": [
+    {
+      "task": 1,
+      "feature": "auth",
+      "tokens": 10730,
+      "regression": false
+    },
+    {
+      "task": 2,
+      "feature": "payments",
+      "tokens": 13688,
+      "regression": false
+    },
+    {
+      "task": 3,
+      "feature": "users",
+      "tokens": 16637,
+      "regression": true
+    },
+    {
+      "task": 4,
+      "feature": "notifications",
+      "tokens": 19611,
+      "regression": false
+    },
+    {
+      "task": 5,
+      "feature": "analytics",
+      "tokens": 22573,
+      "regression": true
+    },
+    {
+      "task": 6,
+      "feature": "billing",
+      "tokens": 25528,
+      "regression": true
+    },
+    {
+      "task": 7,
+      "feature": "search",
+      "tokens": 28480,
+      "regression": false
+    },
+    {
+      "task": 8,
+      "feature": "webhooks",
+      "tokens": 31439,
+      "regression": true
+    },
+    {
+      "task": 9,
+      "feature": "uploads",
+      "tokens": 34394,
+      "regression": true
+    },
+    {
+      "task": 10,
+      "feature": "audit",
+      "tokens": 37343,
+      "regression": false
+    },
+    {
+      "task": 11,
+      "feature": "subscriptions",
+      "tokens": 40317,
+      "regression": true
+    },
+    {
+      "task": 12,
+      "feature": "invites",
+      "tokens": 43273,
+      "regression": true
+    },
+    {
+      "task": 13,
+      "feature": "settings",
+      "tokens": 46231,
+      "regression": true
+    },
+    {
+      "task": 14,
+      "feature": "reports",
+      "tokens": 49186,
+      "regression": false
+    },
+    {
+      "task": 15,
+      "feature": "permissions",
+      "tokens": 52154,
+      "regression": true
+    }
+  ],
+  "fractalKernel": [
+    {
+      "task": 1,
+      "feature": "auth",
+      "tokens": 3808,
+      "regression": false
+    },
+    {
+      "task": 2,
+      "feature": "payments",
+      "tokens": 3817,
+      "regression": false
+    },
+    {
+      "task": 3,
+      "feature": "users",
+      "tokens": 3810,
+      "regression": false
+    },
+    {
+      "task": 4,
+      "feature": "notifications",
+      "tokens": 3827,
+      "regression": false
+    },
+    {
+      "task": 5,
+      "feature": "analytics",
+      "tokens": 3819,
+      "regression": false
+    },
+    {
+      "task": 6,
+      "feature": "billing",
+      "tokens": 3815,
+      "regression": false
+    },
+    {
+      "task": 7,
+      "feature": "search",
+      "tokens": 3813,
+      "regression": false
+    },
+    {
+      "task": 8,
+      "feature": "webhooks",
+      "tokens": 3817,
+      "regression": false
+    },
+    {
+      "task": 9,
+      "feature": "uploads",
+      "tokens": 3815,
+      "regression": false
+    },
+    {
+      "task": 10,
+      "feature": "audit",
+      "tokens": 3810,
+      "regression": false
+    },
+    {
+      "task": 11,
+      "feature": "subscriptions",
+      "tokens": 3827,
+      "regression": false
+    },
+    {
+      "task": 12,
+      "feature": "invites",
+      "tokens": 3815,
+      "regression": false
+    },
+    {
+      "task": 13,
+      "feature": "settings",
+      "tokens": 3817,
+      "regression": false
+    },
+    {
+      "task": 14,
+      "feature": "reports",
+      "tokens": 3815,
+      "regression": false
+    },
+    {
+      "task": 15,
+      "feature": "permissions",
+      "tokens": 3823,
+      "regression": false
+    }
+  ],
+  "summary": {
+    "avgMonolithTokens": 31439,
+    "avgFractalTokens": 3817,
+    "tokenReductionPercent": 87.9,
+    "peakMonolithTokens": 52154,
+    "peakFractalTokens": 3823,
+    "firstPassSuccessRateMonolith": 62,
+    "firstPassSuccessRateFractal": 91.3,
+    "crossSliceRegressionsMonolith": 38.4,
+    "crossSliceRegressionsFractal": 0,
+    "meanExecutionTimeMonolithSec": 142.5,
+    "meanExecutionTimeFractalSec": 38.2
+  }
+}
