@@ -1,0 +1,115 @@
+{
+  "model": "gemini-2.0-flash",
+  "avgMonolithTokens": 1086,
+  "avgFractalTokens": 234,
+  "tokenReductionPercent": 78.5,
+  "peakMonolithTokens": 1991,
+  "peakFractalTokens": 233,
+  "tasks": [
+    {
+      "task": 1,
+      "feature": "auth",
+      "monoTokens": 183,
+      "fkTokens": 233,
+      "reductionPercent": -27.3
+    },
+    {
+      "task": 2,
+      "feature": "payments",
+      "monoTokens": 311,
+      "fkTokens": 233,
+      "reductionPercent": 25.1
+    },
+    {
+      "task": 3,
+      "feature": "users",
+      "monoTokens": 439,
+      "fkTokens": 233,
+      "reductionPercent": 46.9
+    },
+    {
+      "task": 4,
+      "feature": "notifications",
+      "monoTokens": 567,
+      "fkTokens": 233,
+      "reductionPercent": 58.9
+    },
+    {
+      "task": 5,
+      "feature": "analytics",
+      "monoTokens": 695,
+      "fkTokens": 233,
+      "reductionPercent": 66.5
+    },
+    {
+      "task": 6,
+      "feature": "billing",
+      "monoTokens": 823,
+      "fkTokens": 233,
+      "reductionPercent": 71.7
+    },
+    {
+      "task": 7,
+      "feature": "search",
+      "monoTokens": 951,
+      "fkTokens": 233,
+      "reductionPercent": 75.5
+    },
+    {
+      "task": 8,
+      "feature": "webhooks",
+      "monoTokens": 1090,
+      "fkTokens": 238,
+      "reductionPercent": 78.2
+    },
+    {
+      "task": 9,
+      "feature": "uploads",
+      "monoTokens": 1217,
+      "fkTokens": 233,
+      "reductionPercent": 80.9
+    },
+    {
+      "task": 10,
+      "feature": "audit",
+      "monoTokens": 1345,
+      "fkTokens": 233,
+      "reductionPercent": 82.7
+    },
+    {
+      "task": 11,
+      "feature": "subscriptions",
+      "monoTokens": 1473,
+      "fkTokens": 233,
+      "reductionPercent": 84.2
+    },
+    {
+      "task": 12,
+      "feature": "invites",
+      "monoTokens": 1608,
+      "fkTokens": 238,
+      "reductionPercent": 85.2
+    },
+    {
+      "task": 13,
+      "feature": "settings",
+      "monoTokens": 1735,
+      "fkTokens": 233,
+      "reductionPercent": 86.6
+    },
+    {
+      "task": 14,
+      "feature": "reports",
+      "monoTokens": 1863,
+      "fkTokens": 233,
+      "reductionPercent": 87.5
+    },
+    {
+      "task": 15,
+      "feature": "permissions",
+      "monoTokens": 1991,
+      "fkTokens": 233,
+      "reductionPercent": 88.3
+    }
+  ]
+}
